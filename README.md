@@ -9,6 +9,12 @@ Never write another getter or equals method again, with one annotation your clas
 
 2) To read more about @JoinColumn annotation, 
    https://www.baeldung.com/jpa-join-column
+   If any class annotated with @NoRepositoryBean Spring Data does not create instances at run-time. Because it's intermediate class and it's created to add     
+   functionality for the derived class.</br>
+   <b>Why dont we need any implementation for repository interfaces??</b></br>
+   Ans - @Component and @Repository can be used on classes to use them as Spring Beans. However, AlienRepo is not a class, it's an interface which extends a Spring Data interface. Spring Data doesn't use annotations, it detects the interfaces by scanning the classpath and looking at the hierarchy of interfaces to see if a Spring Data interface is extended. If this is the case, it creates an implementation for each interface during runtime, which is then added to the application context as Spring Bean. That's why you don't need any annotations on a Spring Data interface.
+
+If you extend an interface that has @NoRepositoryBean and your derived interface doesn't have @NoRepositoryBean Spring knows that you are trying to use that functionality in your real Repository interface so adding @Repository annotation is verbose.
 
 3) We set "spring.jpa.hibernate.ddl-auto=update" in resources/application.properties, but when we have to deploy it to production we change the value to none
 
@@ -32,4 +38,9 @@ Never write another getter or equals method again, with one annotation your clas
 <h3>Received mail for authentication in mailtrap</h3>
 
 ![image](https://user-images.githubusercontent.com/38052562/165365874-7f49fa28-46c9-4cf5-8b28-2d677168a61e.png)
+-----------------------------------------------------------------------------------------------------------------------------------
 
+<h2>User Verification and Async Processing</h2>
+1) Testing User verification API 
+
+![image](https://user-images.githubusercontent.com/38052562/165388410-8a73d357-7fad-4e1a-9750-dccee4d418cf.png)

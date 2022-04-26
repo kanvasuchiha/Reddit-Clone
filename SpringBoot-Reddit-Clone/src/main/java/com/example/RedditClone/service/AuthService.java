@@ -2,6 +2,7 @@ package com.example.RedditClone.service;
 
 
 import com.example.RedditClone.dto.RegisterRequest;
+import com.example.RedditClone.exceptions.SpringRedditException;
 import com.example.RedditClone.model.NotificationEmail;
 import com.example.RedditClone.model.User;
 import com.example.RedditClone.model.VerificationToken;
@@ -12,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotBlank;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -71,7 +74,26 @@ public class AuthService {
         verificationTokenRepository.save(verificationToken);
 
         return token;
-
     }
 
+    public void verifyAccount(String token) {
+        //As we are returning optional here, in case the entity does not exist, we can call the orElseThrow method
+        //and throw the custom Exception message as Invalid Token
+        Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
+        verificationToken.orElseThrow(() -> new SpringRedditException("Invalid Token"));
+
+        //need to use .get() because of type optional
+        fetchUserAndEnable(verificationToken.get());
+    }
+
+    //Method to enable the user and activate the user account
+    @Transactional
+    private void fetchUserAndEnable(VerificationToken verificationToken) {
+        //Powerful use of Java Hibernate, we dont have user info but only user_id in the table
+        //but because of mapping done onetoone we can directly access user's functions.
+        String username = verificationToken.getUser().getUsername();
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new SpringRedditException("User not found with name: " + username));
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 }

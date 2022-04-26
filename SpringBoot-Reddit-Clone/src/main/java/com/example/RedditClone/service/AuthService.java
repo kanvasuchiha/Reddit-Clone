@@ -53,6 +53,7 @@ public class AuthService {
 
     private String generateVerificationToken(User user) {
         //we gonna use this token to check if the email verification for the user is already done
+        //UUID randomly generates tokens
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token);

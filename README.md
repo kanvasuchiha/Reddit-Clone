@@ -26,8 +26,10 @@ Never write another getter or equals method again, with one annotation your clas
 10) I would remove the referencedColumnName attribute in User class because you are naming the primary key field of Post and Subreddit. I think it is only necessary if you it to reference a non-primary-key field. Now the signup REST API is complete.
 
 <h3>Success message in Postman for /signup REST API</h3>
+
 ![Postman Success](https://user-images.githubusercontent.com/38052562/165365574-d7d698af-781f-42db-9111-66627ae39362.PNG)
 
 <h3>Received mail for authentication in mailtrap</h3>
+
 ![image](https://user-images.githubusercontent.com/38052562/165365874-7f49fa28-46c9-4cf5-8b28-2d677168a61e.png)
 

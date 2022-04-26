@@ -11,3 +11,14 @@ Never write another getter or equals method again, with one annotation your clas
    https://www.baeldung.com/jpa-join-column
 
 3) We set "spring.jpa.hibernate.ddl-auto=update" in resources/application.properties, but when we have to deploy it to production we change the value to none
+
+4) We create a dto - Data Transfer Object for RegisterRequest that will be part of the requestbody for the "$/signup" url. 
+5) Before saving the user in AuthService.java, we need to make sure that we encode the password. Storing the password in real text is a bad idea. Even if our DB is compromised, it will be hard for a hacker to crack passwords if they are encoded with a hashcode. One of the best hashing algorithms we can use is "Bcrypt Hashing". Spring Security provides us a class, which implements this hashing algorithm, known as "BCryptPasswordEncoder"
+
+6) There is nothing wrong with Field Injection @Autowire objects, but spring recommends that we should use constructor injection whenever possible.
+   https://odrotbohm.de/2013/11/why-field-injection-is-evil/
+7) Now once the signup method from AuthService.java class ids done, next work we have to do is send an email activation link. The Idea here is to generate a verification token at the time of saving the user info and send it as part of the email verification. Once the verification is done, we change the enabled field to "true".
+
+8) In the backend when we are creating REST APIs, exceptions are pretty common in the code. So whenever exceptions occur, we don't want any technical details to be exposed to the user. Rather than showing NullPointerException, IllegalStateException, etc., it is better if we share the exception with the user in a much understandable message format. We can do this exact thing by creating our own custom exceptions.
+
+9) MailTrap - Capture SMTP traffic from staging and dev environments. Automate test flows and scenarios with flexible API. Analyze email content for spam score and validate HTML/CSS 

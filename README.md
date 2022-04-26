@@ -22,3 +22,7 @@ Never write another getter or equals method again, with one annotation your clas
 8) In the backend when we are creating REST APIs, exceptions are pretty common in the code. So whenever exceptions occur, we don't want any technical details to be exposed to the user. Rather than showing NullPointerException, IllegalStateException, etc., it is better if we share the exception with the user in a much understandable message format. We can do this exact thing by creating our own custom exceptions.
 
 9) MailTrap - Capture SMTP traffic from staging and dev environments. Automate test flows and scenarios with flexible API. Analyze email content for spam score and validate HTML/CSS 
+
+10) I would remove the referencedColumnName attribute in User class because you are naming the primary key field of Post and Subreddit. I think it is only necessary if you it to reference a non-primary-key field. Now the signup REST API is complete.
+
+![Postman Success](https://user-images.githubusercontent.com/38052562/165365574-d7d698af-781f-42db-9111-66627ae39362.PNG)

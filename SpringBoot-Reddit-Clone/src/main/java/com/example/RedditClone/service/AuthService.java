@@ -2,6 +2,7 @@ package com.example.RedditClone.service;
 
 
 import com.example.RedditClone.dto.RegisterRequest;
+import com.example.RedditClone.model.NotificationEmail;
 import com.example.RedditClone.model.User;
 import com.example.RedditClone.model.VerificationToken;
 import com.example.RedditClone.repository.UserRepository;
@@ -30,6 +31,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final MailService mailService;
 
     //Since we are interacting with DB, it is better to make this method transactional
     @Transactional
@@ -48,6 +50,13 @@ public class AuthService {
         userRepository.save(user);
 
         String token = generateVerificationToken(user);
+
+        //We use the token sent with the url to lookup for which user was the token created and then activate that user
+        mailService.sendMail(new NotificationEmail("Please activate your account",
+                user.getEmail(),
+                "Thank you for signing up to Spring Reddit, " +
+                        "please click on the below url to activate your account : " +
+                        "http://localhost:8080/api/auth/accountVerification/" + token));
 
     }
 

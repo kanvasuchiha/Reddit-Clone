@@ -44,3 +44,16 @@ If you extend an interface that has @NoRepositoryBean and your derived interface
 1) Testing User verification API 
 
 ![image](https://user-images.githubusercontent.com/38052562/165388410-8a73d357-7fad-4e1a-9750-dccee4d418cf.png)
+But the entire /signup call will take approx 10-15 second, until this email is sent and then account is verified, meaning the user has to wait for 10-15 second after clicking on signup button in the UI. As we are contacting external mail server, these kind of calls are expensive and may take up a lot of time. To counter this delay we can execute the code which sends the verification mail asynchronously by running this part in a different thread. Spring provides us simple asynchronous capabilities whenever required, we just need to add @EnableAsync at the top of main app class "RedditCloneApplication" and @Async on top of every expensive method.
+
+Before @Async
+
+![image](https://user-images.githubusercontent.com/38052562/165390172-5ae0f046-3bc1-4eab-a3e6-094eed0cbb3e.png)
+
+After @Async
+![image](https://user-images.githubusercontent.com/38052562/165390285-e3a8d846-0a59-4301-bc57-0305310d1729.png)
+
+Alternate way of doing it is by using some Message Queues like RabbitMQ or ActiveMQ, They provide reliability and also faster ways to perform such a heavy task. But for a normal project we can do it using @Async, as these are too heavyweight for our normal usecase. For large usecases we better use these MQs.
+
+
+

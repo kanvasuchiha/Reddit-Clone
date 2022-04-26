@@ -53,7 +53,7 @@ Before @Async
 After @Async
 ![image](https://user-images.githubusercontent.com/38052562/165390285-e3a8d846-0a59-4301-bc57-0305310d1729.png)
 
-Alternate way of doing it is by using some Message Queues like RabbitMQ or ActiveMQ, They provide reliability and also faster ways to perform such a heavy task. But for a normal project we can do it using @Async, as these are too heavyweight for our normal usecase. For large usecases we better use these MQs.
+Alternate way of doing it is by using some Message Queues like RabbitMQ or ActiveMQ, They provide reliability and also faster ways to perform such a heavy task. But for a normal project we can do it using @Async, as these are too heavyweight for our normal usecase. For a project where we need to use large number of emails, it's better to use MQs.
 
 
 
